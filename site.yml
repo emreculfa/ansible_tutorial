@@ -22,8 +22,7 @@
        name:
          - httpd
        state: latest
-     when: ansible_distribution == "OracleLinux"
-
+     when: ansible_distribution in ["CentOS","OracleLinux"]
    - name: install apache2 package (Ubuntu)
      tags: apache,apache2,ubuntu
      apt:
@@ -52,3 +51,11 @@
      package:
        name: samba
        state: latest
+   - name: copying files
+     tags: apache,apache2,httpd
+     copy:
+             src: default_site.html
+             dest: /var/www/html/index.html
+             owner: root
+             group: root
+             mode: 0644
